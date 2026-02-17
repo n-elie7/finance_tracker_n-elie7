@@ -1,7 +1,7 @@
 /* Custom Properties */
 
 /* 
-    N.B: I used AI to generate this custom properties in the root block
+    N.B: I used ChatGPT AI to generate this custom properties in the root block
 */
 
 :root {
@@ -11,7 +11,7 @@
   --clr-header-text:     rgba(255, 255, 255, 0.75);
   --clr-header-active:   #FFFFFF;
   --clr-tab-indicator:   #60A5FA;
-  --clr-logo-accent:     #60A5FA;
+  --clr-logo-color:     #60A5FA;
 
   /* Colors - Surface */
   --clr-bg:              #EEF1F7;
@@ -225,10 +225,8 @@ code {
 }
 
 
-/* Utility Classes */
-
-/* Screen reader only - visually hidden but accessible */
-.sr-only {
+/* Screen reader only */
+.screen-reader-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -240,8 +238,8 @@ code {
   border: 0;
 }
 
-.sr-only-focusable:focus,
-.sr-only-focusable:focus-within {
+.screen-reader-only-focusable:focus,
+.screen-reader-only-focusable:focus-within {
   position: static;
   width: auto;
   height: auto;
@@ -270,8 +268,7 @@ code {
   border-radius: var(--radius-sm);
 }
 
-/* High-contrast focus for elements on dark backgrounds (header) */
-.site-header :focus-visible {
+.header-section :focus-visible {
   outline-color: var(--clr-tab-indicator);
 }
 

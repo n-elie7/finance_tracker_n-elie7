@@ -1,7 +1,7 @@
 const handleNavigation = () => {
   'use strict';
 
-  const navTabs   = document.querySelectorAll('.nav-tab');
+  const navTabs = document.querySelectorAll('.nav-tab');
   const tabPanels = document.querySelectorAll('.tab-panel');
 
   function switchTab(tabId) {
@@ -131,7 +131,7 @@ const handleNavigation = () => {
   }
 
 
-  const deleteModal     = document.getElementById('delete-modal');
+  const deleteModal = document.getElementById('delete-modal');
   const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
   function openModal() {
