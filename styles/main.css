@@ -19,8 +19,8 @@
   --clr-surface-raised:  #F9FAFC;
 
   /* Colors - Brand Primary */
-  --clr-primary:         #2563EB;
-  --clr-primary-hover:   #1D4ED8;
+  --clr-primary:         #263c67;
+  --clr-primary-hover:   #1f3155;
   --clr-primary-focus:   rgba(37, 99, 235, 0.25);
   --clr-primary-light:   #EFF6FF;
 
@@ -56,12 +56,6 @@
   --clr-fees-bg:             #E0E7FF;
   --clr-other-text:          #374151;
   --clr-other-bg:            #F3F4F6;
-
-  /* Colors - Progress Bar */
-  --clr-progress-track:  #E5E7EB;
-  --clr-progress-ok:     #10B981;
-  --clr-progress-warn:   #F59E0B;
-  --clr-progress-over:   #EF4444;
 
   /* Typography */
   --font-body:           'Outfit', system-ui, sans-serif;
