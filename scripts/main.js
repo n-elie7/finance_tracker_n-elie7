@@ -5,10 +5,10 @@ const handleNavigation = () => {
   const tabPanels = document.querySelectorAll('.tab-panel');
 
   function switchTab(tabId) {
-    navTabs.forEach(function (btn) {
-      const isActive = btn.dataset.tab === tabId;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-current', isActive ? 'page' : 'false');
+    navTabs.forEach(function (button) {
+      const isActive = button.dataset.tab === tabId;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-current', isActive ? 'page' : 'false');
     });
 
     tabPanels.forEach(function (panel) {
@@ -33,9 +33,9 @@ const handleNavigation = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  navTabs.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      switchTab(btn.dataset.tab);
+  navTabs.forEach(function (button) {
+    button.addEventListener('click', function () {
+      switchTab(button.dataset.tab);
     });
   });
 
@@ -111,7 +111,7 @@ const handleNavigation = () => {
       switchTab(navTarget.dataset.nav);
     }
 
-    if (e.target.id === 'go-add-btn') {
+    if (e.target.id === 'go-add-button') {
       switchTab('add-transaction');
     }
   });
@@ -123,22 +123,22 @@ const handleNavigation = () => {
     dateInput.setAttribute('max', today); 
   }
 
-  const cancelBtn = document.getElementById('cancel-btn');
-  if (cancelBtn) {
-    cancelBtn.addEventListener('click', function () {
+  const cancelButton = document.getElementById('cancel-button');
+  if (cancelButton) {
+    cancelButton.addEventListener('click', function () {
       switchTab('transactions');
     });
   }
 
 
   const deleteModal = document.getElementById('delete-modal');
-  const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+  const cancelDeleteButton = document.getElementById('cancel-delete-button');
 
   function openModal() {
     if (!deleteModal) return;
     deleteModal.removeAttribute('hidden');
-    const firstBtn = deleteModal.querySelector('button');
-    if (firstBtn) firstBtn.focus();
+    const firstButton = deleteModal.querySelector('button');
+    if (firstButton) firstButton.focus();
   }
 
   function closeModal() {
@@ -146,8 +146,8 @@ const handleNavigation = () => {
     deleteModal.setAttribute('hidden', '');
   }
 
-  if (cancelDeleteBtn) {
-    cancelDeleteBtn.addEventListener('click', closeModal);
+  if (cancelDeleteButton) {
+    cancelDeleteButton.addEventListener('click', closeModal);
   }
 
   if (deleteModal) {
@@ -167,7 +167,6 @@ const handleNavigation = () => {
   }
 
   init();
-
 };
 
 handleNavigation();
