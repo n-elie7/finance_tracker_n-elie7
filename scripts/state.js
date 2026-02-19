@@ -121,10 +121,6 @@ export function setEditingId(id) {
   state.editingId = id;
 }
 
-export function getEditingId() {
-  return state.editingId;
-}
-
 // clear all transactions
 export function clearAllTransactions() {
   state.transactions = [];

@@ -1,4 +1,4 @@
-import { getTransactions, deleteTransaction, getSettings } from './state.js';
+import { getAllTransactions, deleteTransaction, getSettings } from './state.js';
 import { highlightMatches, validatePattern, escapeHtml } from './search.js';
 
 // Current sort and filter state
@@ -12,7 +12,7 @@ export function renderTransactions(transactions = null, searchRegex = null) {
 
   if (!listContainer) return;
 
-  const transactionsArray = transactions || getTransactions();
+  const transactionsArray = transactions || getAllTransactions();
 
   // clear existing content
   const existingCards = listContainer.querySelectorAll('.transaction-card');
@@ -144,7 +144,7 @@ export function filterTransactions(transactions, regex) {
 
 // update transaction list
 export function updateTransactionList() {
-  let transactions = getTransactions();
+  let transactions = getAllTransactions();
 
   transactions = filterTransactions(transactions, currentSearchRegex);
 
@@ -153,7 +153,7 @@ export function updateTransactionList() {
   renderTransactions(transactions, currentSearchRegex);
 
   // Update count display
-  updateTransactionCount(transactions.length, getTransactions().length);
+  updateTransactionCount(transactions.length, getAllTransactions().length);
 }
 
 // Update transaction count display
@@ -179,7 +179,7 @@ export function getSearchRegex() {
 
 // delete tansaction by its ID
 export function handleDelete(id) {
-  const transaction = getTransactions().find(transaction => transaction.id === id);
+  const transaction = getAllTransactions().find(transaction => transaction.id === id);
   if (!transaction) return;
 
   // ask for delete confirmation

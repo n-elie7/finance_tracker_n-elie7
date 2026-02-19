@@ -1,12 +1,12 @@
-import { getTransactions, getSettings } from './state.js';
+import { getAllTransactions, getSettings } from './state.js';
 import { getLastNDays, getDaysAgo } from './utils.js';
 
 export function getTotalTransactions() {
-  return getTransactions().length;
+  return getAllTransactions().length;
 }
 
 export function getTotalSpent() {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   return transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
 }
 
@@ -39,7 +39,7 @@ export function getBudgetStatus() {
 
 
 export function getTopCategory() {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
 
   if (transactions.length === 0) {
     return { category: null, amount: 0, count: 0 };
@@ -80,7 +80,7 @@ export function getTopCategory() {
 
 
 export function getLast7DaysSpending() {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   const last7Days = getLastNDays(7);
 
   // Group transactions by date
@@ -111,7 +111,7 @@ export function getLast7DaysSpending() {
 
 
 export function getSpendingForPeriod(days) {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   const cutoffDate = getDaysAgo(days);
 
   return transactions
@@ -121,7 +121,7 @@ export function getSpendingForPeriod(days) {
 
 
 export function getCategoryBreakdown() {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   const totalSpent = getTotalSpent();
 
   if (transactions.length === 0) {
@@ -151,7 +151,7 @@ export function getCategoryBreakdown() {
 }
 
 export function getAverageTransaction() {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   if (transactions.length === 0) return 0;
 
   const total = getTotalSpent();
@@ -159,7 +159,7 @@ export function getAverageTransaction() {
 }
 
 export function getSpendingTrend(days = 7) {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   
   const currentPeriodStart = getDaysAgo(days - 1);
   const previousPeriodStart = getDaysAgo(days * 2 - 1);

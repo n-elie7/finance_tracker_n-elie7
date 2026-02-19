@@ -1,16 +1,34 @@
-import { initState, addTransaction, updateTransaction, getTransactionById, setEditingId, getEditingId, getTransactions, importTransactions, clearTransactions, getSettings, updateSettings, getCategories, addCategory, removeCategory } from './state.js';
-import { validateDescription, validateAmount, validateDate, validateCategory, checkDuplicateWords, validateBudgetCap } from './validators.js';
+import { 
+  initState, 
+  addTransaction, 
+  updateTransaction, 
+  getTransactionById, 
+  setEditingId, 
+  getAllTransactions, 
+  importTransactions, 
+  clearAllTransactions, 
+  getSettings, 
+  updateSettings, 
+  getAllCategories, 
+  addCategory, 
+  removeCategory } from './state.js';
+import { validateDescription, validateAmount, validateDate, validateCategory, checkDuplicateWords, validateBudget } from './validators.js';
 import { initTransactionList, updateTransactionList, setSort, setSearchRegex } from './ui.js';
 import { validateRegex } from './search.js';
 import { initDashboard, updateDashboard } from './dashboard.js';
 import { formatCurrency } from './utils.js';
 
+initState();
+
+initTransactionList();
+
+initDashboard();
 
 const handleNavigation = () => {
-  'use strict';
-
   const navTabs = document.querySelectorAll('.nav-tab');
   const tabPanels = document.querySelectorAll('.tab-panel');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mainNav = document.getElementById('main-nav');
 
   function switchTab(tabId) {
     navTabs.forEach(function (button) {
@@ -47,9 +65,6 @@ const handleNavigation = () => {
     });
   });
 
-
-  const menuToggle = document.getElementById('menu-toggle');
-  const mainNav    = document.getElementById('main-nav');
 
   function openMobileNav() {
     mainNav.removeAttribute('hidden');
@@ -142,13 +157,6 @@ const handleNavigation = () => {
   const deleteModal = document.getElementById('delete-modal');
   const cancelDeleteButton = document.getElementById('cancel-delete-button');
 
-  function openModal() {
-    if (!deleteModal) return;
-    deleteModal.removeAttribute('hidden');
-    const firstButton = deleteModal.querySelector('button');
-    if (firstButton) firstButton.focus();
-  }
-
   function closeModal() {
     if (!deleteModal) return;
     deleteModal.setAttribute('hidden', '');
@@ -165,16 +173,6 @@ const handleNavigation = () => {
       }
     });
   }
-
-  function init() {
-    if (window.innerWidth < 768) {
-      mainNav.setAttribute('hidden', '');
-    } else {
-      mainNav.removeAttribute('hidden');
-    }
-  }
-
-  init();
 };
 
 handleNavigation();
@@ -453,7 +451,7 @@ const newCategoryError = document.getElementById('new-category-error');
 function renderCategoriesList() {
   if (!categoriesList) return;
 
-  const categories = getCategories();
+  const categories = getAllCategories();
 
   // Clear existing
   categoriesList.innerHTML = '';
@@ -546,7 +544,7 @@ function handleAddCategory() {
 
 function handleRemoveCategory(category) {
   // check if category is in use
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   const inUse = transactions.some(transaction => transaction.category === category);
 
   if (inUse) {
@@ -704,7 +702,7 @@ function saveBudgetCap() {
   }
 
   // validation
-  const validation = validateBudgetCap(value);
+  const validation = validateBudget(value);
   if (!validation.valid) {
     if (budgetCapError) {
       budgetCapError.textContent = validation.error;
@@ -752,7 +750,7 @@ const clearDataButton = document.getElementById('clear-data-button');
 
 // export transaction by simulating creating downloadable file content
 function exportTransactions() {
-  const transactions = getTransactions();
+  const transactions = getAllTransactions();
   const dataStr = JSON.stringify(transactions, null, 2);
   const dataBlob = new Blob([dataStr], { type: 'application/json' });
   
@@ -822,7 +820,7 @@ function handleClearAllData() {
   const confirmSecond = confirm('This will permanently delete all your data. Are you absolutely sure?');
   if (!confirmSecond) return;
 
-  clearTransactions();
+  clearAllTransactions();
   
   updateTransactionList();
   updateDashboard();
@@ -846,3 +844,16 @@ if (importFileInput) {
 if (clearDataButton) {
   clearDataButton.addEventListener('click', handleClearAllData);
 }
+
+function init() {
+  const mainNav = document.getElementById('main-nav');
+  if (window.innerWidth < 768) {
+    mainNav.setAttribute('hidden', '');
+  } else {
+    mainNav.removeAttribute('hidden');
+  }
+  loadSettingsIntoForm();
+  renderCategoriesList();
+}
+
+init();
