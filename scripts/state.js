@@ -20,7 +20,7 @@ export function getAllTransactions() {
 
 // get transaction based on its id
 export function getTransactionById(id) {
-  return state.transactions.find(txn => txn.id === id) || null;
+  return state.transactions.find(transaction => transaction.id === id) || null;
 }
 
 // This function helps to add transaction
@@ -41,7 +41,7 @@ export function addTransaction(transaction) {
 
 // This helps to update transaction by its ID 
 export function updateTransaction(id, updates) {
-  const index = state.transactions.findIndex(txn => txn.id === id);
+  const index = state.transactions.findIndex(transaction => transaction.id === id);
   
   if (index === -1) {
     return null;
@@ -62,7 +62,7 @@ export function updateTransaction(id, updates) {
 
 // delete transaction ID
 export function deleteTransaction(id) {
-  const index = state.transactions.findIndex(txn => txn.id === id);
+  const index = state.transactions.findIndex(transaction => transaction.id === id);
   
   if (index === -1) {
     return false;
