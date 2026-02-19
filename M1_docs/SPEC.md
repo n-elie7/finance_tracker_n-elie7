@@ -60,9 +60,9 @@ FinanceAha is a fully accessible, responsive web application for tracking studen
 ```
 
 ### LocalStorage Keys
-- `financeTracker:transactions` - Array of all transaction records
-- `financeTracker:settings` - Settings configuration object
-- `financeTracker:appState` - UI state (current view, filters, sort order)
+- `financeTrackerTransactions` - Array of all transaction records
+- `financeTrackerSettings` - Settings configuration object
+- `financeTrackerAppState` - UI state (current view, filters, sort order)
 
 ---
 
@@ -341,26 +341,13 @@ Base styles for 360px+ (small mobile)
 ## Animations & Transitions
 
 ### Micro-interactions
-1. **Button Hover/Focus** (150ms ease)
-   ```css
-   button {
-     transition: background-color 150ms ease, transform 100ms ease;
-   }
-   button:hover {
-     transform: translateY(-2px);
-   }
-   ```
-
-2. **Form Validation** (200ms ease)
+1. **Form Validation** (200ms ease)
    - Input border color change
    - Error message slide-in
 
-3. **Page Transitions** (300ms ease)
+2. **Page Transitions** (300ms ease)
    - Fade in new section
    - Slide up content
-
-4. **Budget Progress Bar** (500ms ease)
-   - Smooth width transition on data change
 
 ### Accessibility Considerations
 - Respect `prefers-reduced-motion`
@@ -396,7 +383,6 @@ student-finance-tracker/
 │   ├── main.css          (variables, reset, base)
 │   ├── layout.css        (flexbox, grid, responsive)
 │   ├── components.css    (buttons, cards, forms)
-│   └── animations.css    (transitions, keyframes)
 ├── scripts/
 │   ├── main.js           (app initialization)
 │   ├── state.js          (data management)
