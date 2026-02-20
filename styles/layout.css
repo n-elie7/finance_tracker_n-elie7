@@ -436,7 +436,7 @@
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
-
+}
 @media (min-width: 768px) {
   .footer-container {
     flex-direction: row;
