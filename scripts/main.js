@@ -11,15 +11,21 @@ import {
   updateSettings, 
   getAllCategories, 
   addCategory, 
-  removeCategory } from './state.js';
+  removeCategory,
+  subscribe
+ } from './state.js';
 import { validateDescription, validateAmount, validateDate, validateCategory, checkDuplicateWords, validateBudget } from './validators.js';
 import { initTransactionList, updateTransactionList, setSort, setSearchRegex } from './ui.js';
 import { validateRegex } from './search.js';
 import { initDashboard, updateDashboard } from './dashboard.js';
-import { formatCurrency } from './utils.js';
+import { formatCurrency, convertCurrency } from './utils.js';
 
 initState();
 
+subscribe(() => {
+  updateDashboard();
+  updateTransactionList();
+});
 initTransactionList();
 
 initDashboard();
@@ -671,8 +677,10 @@ function updateCurrencySymbols(currency) {
 
 function saveCurrencySettings() {
   const settings = getSettings();
-
   const baseCurrency = baseCurrencySelect.value;
+  const oldCurrency = settings.baseCurrency;
+  const newCurrency = baseCurrencySelect.value;
+
   const eurRate = parseFloat(rateEurInput.value);
   const rwfRate = parseFloat(rateRwfInput.value);
 
@@ -687,16 +695,34 @@ function saveCurrencySettings() {
     return;
   }
 
+  const newRates = { EUR: eurRate, RWF: rwfRate };
+  let newBudgetCap = settings.budgetCap;
+
+  if (oldCurrency !== newCurrency) {
+    if (newBudgetCap !== null) {
+      newBudgetCap = convertCurrency(newBudgetCap, oldCurrency, newCurrency, newRates);
+    }
+
+    const transactions = getAllTransactions();
+    if (transactions.length > 0) {
+      const migratedTransactions = transactions.map(transaction => ({
+        ...transaction,
+        amount: convertCurrency(transaction.amount, oldCurrency, newCurrency, newRates),
+        updatedAt: new Date().toISOString()
+      }));
+      importTransactions(migratedTransactions);
+    }
+  }
+
   // Update settings
   updateSettings({
-    baseCurrency,
-    exchangeRates: {
-      EUR: eurRate,
-      RWF: rwfRate
-    }
+    baseCurrency: newCurrency,
+    exchangeRates: newRates,
+    budgetCap: newBudgetCap
   });
 
-  updateCurrencySymbols(baseCurrency);
+  loadSettingsIntoForm();
+  updateCurrencySymbols(newCurrency);
   updateDashboard();
   updateTransactionList();
 

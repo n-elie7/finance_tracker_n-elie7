@@ -415,6 +415,28 @@
   font-size: var(--text-sm);
 }
 
+.footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s ease, text-decoration 0.2s ease;
+  outline: none;
+}
+
+.footer a:hover,
+.footer a:focus-visible {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
 @media (min-width: 768px) {
   .footer-container {
     flex-direction: row;

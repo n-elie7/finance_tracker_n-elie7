@@ -42,6 +42,9 @@ function updateStatCards() {
       if (budgetStatus.isOver) {
         remainingEl.textContent = `-${formatted}`;
         remainingEl.style.color = 'var(--clr-danger)';
+      } else if (budgetStatus.percentage >= 90) {
+        remainingEl.textContent = formatted;
+        remainingEl.style.color = 'var(--clr-warning)'; 
       } else {
         remainingEl.textContent = formatted;
         remainingEl.style.color = 'var(--clr-success)';
@@ -57,7 +60,7 @@ function updateStatCards() {
   if (topCategoryEl) {
     if (topCategory.category) {
       const amount = formatCurrency(topCategory.amount, settings.baseCurrency);
-      topCategoryEl.textContent = `${topCategory.category} (${amount})`;
+      topCategoryEl.textContent = `${topCategory.category}`;
     } else {
       topCategoryEl.textContent = '--';
     }
@@ -99,7 +102,8 @@ function updateChart() {
     bar.className = 'chart-bar';
     
     // Calculate height percentage
-    const heightPercent = maxAmount > 0 ? (day.amount / maxAmount) * 100 : 0;
+    const rawHeight = maxAmount > 0 ? (day.amount / maxAmount) * 100 : 0;
+    const heightPercent = Math.round(rawHeight * 10) / 10;
     bar.style.height = `${heightPercent}%`;
     
     // Set ARIA label

@@ -4,107 +4,107 @@
     "description": "Lunch at cafeteria",
     "amount": 12.50,
     "category": "Food",
-    "date": "2025-01-01",
-    "createdAt": "2025-01-01T12:00:00.000Z",
-    "updatedAt": "2025-01-01T12:00:00.000Z"
+    "date": "2026-02-16",
+    "createdAt": "2026-02-16T12:00:00.000Z",
+    "updatedAt": "2026-02-16T12:00:00.000Z"
   },
   {
     "id": "aha_1704153600000",
     "description": "Chemistry textbook",
     "amount": 89.99,
     "category": "Books",
-    "date": "2025-01-02",
-    "createdAt": "2025-01-02T09:30:00.000Z",
-    "updatedAt": "2025-01-02T09:30:00.000Z"
+    "date": "2026-02-16",
+    "createdAt": "2026-02-16T09:30:00.000Z",
+    "updatedAt": "2026-02-16T09:30:00.000Z"
   },
   {
     "id": "aha_1704240000000",
     "description": "Bus pass monthly",
     "amount": 45.00,
     "category": "Transport",
-    "date": "2025-01-03",
-    "createdAt": "2025-01-03T14:15:00.000Z",
-    "updatedAt": "2025-01-03T14:15:00.000Z"
+    "date": "2026-02-17",
+    "createdAt": "2026-02-17T14:15:00.000Z",
+    "updatedAt": "2026-02-17T14:15:00.000Z"
   },
   {
     "id": "aha_1704326400000",
     "description": "Coffee with friends",
     "amount": 8.75,
     "category": "Entertainment",
-    "date": "2025-01-04",
-    "createdAt": "2025-01-04T16:45:00.000Z",
-    "updatedAt": "2025-01-04T16:45:00.000Z"
+    "date": "2026-02-17",
+    "createdAt": "2026-02-17T16:45:00.000Z",
+    "updatedAt": "2026-02-17T16:45:00.000Z"
   },
   {
     "id": "aha_1704412800000",
     "description": "Tuition fee deposit",
     "amount": 500.00,
     "category": "Fees",
-    "date": "2025-01-05",
-    "createdAt": "2025-01-05T10:00:00.000Z",
-    "updatedAt": "2025-01-05T10:00:00.000Z"
+    "date": "2026-02-18",
+    "createdAt": "2026-02-18T10:00:00.000Z",
+    "updatedAt": "2026-02-18T10:00:00.000Z"
   },
   {
     "id": "aha_1704499200000",
     "description": "Groceries",
     "amount": 35.20,
     "category": "Food",
-    "date": "2025-01-06",
-    "createdAt": "2025-01-06T18:30:00.000Z",
-    "updatedAt": "2025-01-06T18:30:00.000Z"
+    "date": "2026-02-18",
+    "createdAt": "2026-02-18T18:30:00.000Z",
+    "updatedAt": "2026-02-18T18:30:00.000Z"
   },
   {
     "id": "aha_1704585600000",
     "description": "Movie ticket",
     "amount": 15.00,
     "category": "Entertainment",
-    "date": "2025-01-07",
-    "createdAt": "2025-01-07T20:00:00.000Z",
-    "updatedAt": "2025-01-07T20:00:00.000Z"
+    "date": "2026-02-19",
+    "createdAt": "2026-02-19T20:00:00.000Z",
+    "updatedAt": "2026-02-19T20:00:00.000Z"
   },
   {
     "id": "aha_1704672000000",
     "description": "Notebook and pens",
     "amount": 12.99,
     "category": "Books",
-    "date": "2025-01-08",
-    "createdAt": "2025-01-08T11:00:00.000Z",
-    "updatedAt": "2025-01-08T11:00:00.000Z"
+    "date": "2026-02-19",
+    "createdAt": "2026-02-19T11:00:00.000Z",
+    "updatedAt": "2026-02-19T11:00:00.000Z"
   },
   {
     "id": "aha_1704758400000",
     "description": "Coffee coffee morning rush",
     "amount": 4.50,
     "category": "Food",
-    "date": "2025-01-09",
-    "createdAt": "2025-01-09T07:30:00.000Z",
-    "updatedAt": "2025-01-09T07:30:00.000Z"
+    "date": "2026-02-20",
+    "createdAt": "2026-02-20T07:30:00.000Z",
+    "updatedAt": "2026-02-20T07:30:00.000Z"
   },
   {
     "id": "aha_1704844800000",
     "description": "Gym membership",
     "amount": 30.00,
     "category": "Other",
-    "date": "2025-01-10",
-    "createdAt": "2025-01-10T15:00:00.000Z",
-    "updatedAt": "2025-01-10T15:00:00.000Z"
+    "date": "2026-02-20",
+    "createdAt": "2026-02-20T15:00:00.000Z",
+    "updatedAt": "2026-02-20T15:00:00.000Z"
   },
   {
     "id": "aha_1704931200000",
     "description": "Tea and snacks",
     "amount": 6.25,
     "category": "Food",
-    "date": "2025-01-11",
-    "createdAt": "2025-01-11T14:20:00.000Z",
-    "updatedAt": "2025-01-11T14:20:00.000Z"
+    "date": "2026-02-21",
+    "createdAt": "2026-02-21T14:20:00.000Z",
+    "updatedAt": "2026-02-21T14:20:00.000Z"
   },
   {
     "id": "aha_1705017600000",
     "description": "Taxi ride",
     "amount": 18.50,
     "category": "Transport",
-    "date": "2025-01-12",
-    "createdAt": "2025-01-12T22:00:00.000Z",
-    "updatedAt": "2025-01-12T22:00:00.000Z"
+    "date": "2026-02-22",
+    "createdAt": "2026-02-22T22:00:00.000Z",
+    "updatedAt": "2026-02-22T22:00:00.000Z"
   }
 ]

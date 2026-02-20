@@ -7,6 +7,23 @@ let state = {
   editingId: null 
 };
 
+const listeners = [];
+
+export function subscribe(listener) {
+  listeners.push(listener);
+  // Return an unsubscribe function
+  return () => {
+    const index = listeners.indexOf(listener);
+    if (index > -1) {
+      listeners.splice(index, 1);
+    }
+  };
+}
+
+function notifyListeners() {
+  listeners.forEach(listener => listener());
+}
+
 // this will load state from localStorage
 export function initState() {
   state.transactions = loadTransactions();
@@ -36,6 +53,7 @@ export function addTransaction(transaction) {
   state.transactions.push(newTransaction);
   saveTransactions(state.transactions);
   
+  notifyListeners();
   return newTransaction;
 }
 
@@ -57,6 +75,7 @@ export function updateTransaction(id, updates) {
 
   saveTransactions(state.transactions);
   
+  notifyListeners();
   return state.transactions[index];
 }
 
@@ -71,6 +90,7 @@ export function deleteTransaction(id) {
   state.transactions.splice(index, 1);
   saveTransactions(state.transactions);
   
+  notifyListeners();
   return true;
 }
 
@@ -121,10 +141,16 @@ export function setEditingId(id) {
   state.editingId = id;
 }
 
+export function getEditingId() {
+  return state.editingId;
+}
+
 // clear all transactions
 export function clearAllTransactions() {
   state.transactions = [];
   saveTransactions(state.transactions);
+  
+  notifyListeners();
 }
 
 // import transaction data
@@ -136,5 +162,6 @@ export function importTransactions(transactions) {
   state.transactions = transactions;
   saveTransactions(state.transactions);
   
+  notifyListeners();
   return true;
 }

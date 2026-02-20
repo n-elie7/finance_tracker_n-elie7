@@ -17,7 +17,7 @@ export function formatCurrency(amount, currency = 'USD') {
   const symbol = symbols[currency] || '$';
   const decimals = currency === 'RWF' ? 0 : 2;
 
-  return `${symbol}${amount.toFixed(decimals)}`;
+  return `${symbol} ${amount.toFixed(decimals)}`;
 }
 
 export function convertCurrency(amount, fromCurrency, toCurrency, exchangeRates) {

@@ -25,9 +25,13 @@ export function getBudgetStatus() {
   }
 
   const totalSpent = getTotalSpent();
-  const remaining = budgetCap - totalSpent;
+  const rawRemaining = budgetCap - totalSpent;
+  const remaining = Math.round(rawRemaining * 100) / 100;
   const isOver = remaining < 0;
-  const percentage = Math.min((totalSpent / budgetCap) * 100, 100);
+  
+  // Prevent infinite fraction percentages
+  const rawPercentage = Math.min((totalSpent / budgetCap) * 100, 100);
+  const percentage = Math.round(rawPercentage * 100) / 100;
 
   return {
     remaining,
