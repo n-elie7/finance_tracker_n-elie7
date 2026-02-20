@@ -19,7 +19,7 @@ FinanceAha is a client-side finance tracker that allows users to record transact
 
 **Live Demo:** https://n-elie7.github.io/finance_tracker_n-elie7/
 
-**Demo Video:** coming soon
+**Demo Video:** https://youtu.be/3hSqWMNTVYI
 
 ## Installation and Setup
 
