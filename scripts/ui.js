@@ -91,7 +91,7 @@ function formatCurrency(amount, currency = 'USD') {
   const symbols = {
     USD: '$',
     EUR: '€',
-    RWF: 'FRw'
+    RWF: 'FRW'
   };
 
   const symbol = symbols[currency] || '$';

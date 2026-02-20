@@ -24,59 +24,60 @@ initTransactionList();
 
 initDashboard();
 
-const handleNavigation = () => {
-  const navTabs = document.querySelectorAll('.nav-tab');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-  const menuToggle = document.getElementById('menu-toggle');
-  const mainNav = document.getElementById('main-nav');
+const navTabs = document.querySelectorAll('.nav-tab');
+const tabPanels = document.querySelectorAll('.tab-panel');
+const menuToggle = document.getElementById('menu-toggle');
+const mainNav = document.getElementById('main-nav');
 
-  function switchTab(tabId) {
-    navTabs.forEach(function (button) {
-      const isActive = button.dataset.tab === tabId;
-      button.classList.toggle('active', isActive);
-      button.setAttribute('aria-current', isActive ? 'page' : 'false');
-    });
+function switchTab(tabId) {
+  navTabs.forEach(function (button) {
+    const isActive = button.dataset.tab === tabId;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-current', isActive ? 'page' : 'false');
+  });
 
-    tabPanels.forEach(function (panel) {
-      if (panel.id === tabId) {
-        panel.removeAttribute('hidden');
-        const heading = panel.querySelector('h1');
-        if (heading) {
-          heading.setAttribute('tabindex', '-1');
-          heading.focus({ preventScroll: false });
-          heading.addEventListener('blur', function handler() {
-            heading.removeAttribute('tabindex');
-            heading.removeEventListener('blur', handler);
-          });
-        }
-      } else {
-        panel.setAttribute('hidden', '');
+  tabPanels.forEach(function (panel) {
+    if (panel.id === tabId) {
+      panel.removeAttribute('hidden');
+      const heading = panel.querySelector('h1');
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: false });
+        heading.addEventListener('blur', function handler() {
+          heading.removeAttribute('tabindex');
+          heading.removeEventListener('blur', handler);
+        });
       }
-    });
+    } else {
+      panel.setAttribute('hidden', '');
+    }
+  });
 
+  if (window.innerWidth < 768) {
     closeMobileNav();
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openMobileNav() {
+  mainNav.removeAttribute('hidden');
+  menuToggle.setAttribute('aria-expanded', 'true');
+  menuToggle.setAttribute('aria-label', 'Close navigation menu');
+}
+
+function closeMobileNav() {
+  mainNav.setAttribute('hidden', '');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', 'Open navigation menu');
+}
+
+const handleNavigation = () => {
   navTabs.forEach(function (button) {
     button.addEventListener('click', function () {
       switchTab(button.dataset.tab);
     });
   });
-
-
-  function openMobileNav() {
-    mainNav.removeAttribute('hidden');
-    menuToggle.setAttribute('aria-expanded', 'true');
-    menuToggle.setAttribute('aria-label', 'Close navigation menu');
-  }
-
-  function closeMobileNav() {
-    mainNav.setAttribute('hidden', '');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Open navigation menu');
-  }
 
   function toggleMobileNav() {
     const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
@@ -374,33 +375,38 @@ function resetForm() {
   transactionForm.reset();
   
   // clear all error messages
-  descError.textContent = '';
-  amountError.textContent = '';
-  dateError.textContent = '';
-  categoryError.textContent = '';
+  if (descError) descError.textContent = '';
+  if (amountError) amountError.textContent = '';
+  if (dateError) dateError.textContent = '';
+  if (categoryError) categoryError.textContent = '';
   
   // reset aria-invalid
-  descInput.setAttribute('aria-invalid', 'false');
-  amountInput.setAttribute('aria-invalid', 'false');
-  dateInput.setAttribute('aria-invalid', 'false');
-  categorySelect.setAttribute('aria-invalid', 'false');
+  if (descInput) descInput.setAttribute('aria-invalid', 'false');
+  if (amountInput) amountInput.setAttribute('aria-invalid', 'false');
+  if (dateInput) dateInput.setAttribute('aria-invalid', 'false');
+  if (categorySelect) categorySelect.setAttribute('aria-invalid', 'false');
   
   // reset hint text
   const descHint = document.getElementById('desc-hint');
-  descHint.textContent = 'No leading or trailing spaces allowed';
-  descHint.style.color = '';
+  if (descHint) {
+    descHint.textContent = 'No leading or trailing spaces allowed';
+    descHint.style.color = '';
+  }
   
   const today = new Date().toISOString().split('T')[0];
-  dateInput.value = today;
+  if (dateInput) dateInput.value = today;
   
   // Clear edit ID
-  editIdInput.value = '';
+  if (editIdInput) editIdInput.value = '';
   setEditingId(null);
   
   // Update form heading
-  document.getElementById('form-heading').textContent = 'Add Transaction';
-  document.getElementById('form-subtitle').textContent = 'Record a new expense';
-  submitButton.textContent = 'Save Transaction';
+  const formHeading = document.getElementById('form-heading');
+  const formSubtitle = document.getElementById('form-subtitle');
+  
+  if (formHeading) formHeading.textContent = 'Add Transaction';
+  if (formSubtitle) formSubtitle.textContent = 'Record a new expense';
+  if (submitButton) submitButton.textContent = 'Save Transaction';
 }
 
 function populateFormForEdit(id) {
@@ -416,12 +422,16 @@ function populateFormForEdit(id) {
   setEditingId(id);
   
   // Update form heading
-  document.getElementById('form-heading').textContent = 'Edit Transaction';
-  document.getElementById('form-subtitle').textContent = 'Update transaction details';
-  submitButton.textContent = 'Update Transaction';
+  const formHeading = document.getElementById('form-heading');
+  const formSubtitle = document.getElementById('form-subtitle');
+  
+  if (formHeading) formHeading.textContent = 'Edit Transaction';
+  if (formSubtitle) formSubtitle.textContent = 'Update transaction details';
+  if (submitButton) submitButton.textContent = 'Update Transaction';
   
   switchTab('add-transaction');
-  descInput.focus();
+  
+  if (descInput) descInput.focus();
 }
 
 window.editTransaction = populateFormForEdit;

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceAha - Validation Tests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 2rem;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #1B2B4B;
+        }
+
+        .subtitle {
+            color: #6B7280;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .test-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .test-section h2 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #374151;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .test-case {
+            display: grid;
+            grid-template-columns: auto 1fr 120px;
+            gap: 1rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .test-case.pass {
+            background: #ECFDF5;
+            border-left: 4px solid #059669;
+        }
+
+        .test-case.fail {
+            background: #FEF2F2;
+            border-left: 4px solid #DC2626;
+        }
+
+        .test-icon {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .test-case.pass .test-icon {
+            color: #059669;
+        }
+
+        .test-case.fail .test-icon {
+            color: #DC2626;
+        }
+
+        .test-input {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.05);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .test-result {
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .test-case.pass .test-result {
+            color: #059669;
+        }
+
+        .test-case.fail .test-result {
+            color: #DC2626;
+        }
+
+        .test-error {
+            grid-column: 2 / 4;
+            font-size: 0.85rem;
+            color: #DC2626;
+            margin-top: 0.25rem;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #E5E7EB;
+        }
+
+        .summary-card {
+            background: #F9FAFB;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .summary-card.total .summary-value {
+            color: #374151;
+        }
+
+        .summary-card.passed .summary-value {
+            color: #059669;
+        }
+
+        .summary-card.failed .summary-value {
+            color: #DC2626;
+        }
+
+        .pattern-display {
+            background: #F3F4F6;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid #6B7280;
+        }
+
+        .run-tests-btn {
+            background: #2563EB;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .run-tests-btn:hover {
+            background: #1D4ED8;
+        }
+
+        .run-tests-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FinanceAha - Validation Tests</h1>
+        <p class="subtitle">Testing all regex validation patterns with edge cases</p>
+
+        <button class="run-tests-btn" id="run-tests">Run All Tests</button>
+
+        <div id="results"></div>
+
+        <div class="summary" id="summary" style="display: none;">
+            <div class="summary-card total">
+                <div class="summary-label">Total Tests</div>
+                <div class="summary-value" id="total-tests">0</div>
+            </div>
+            <div class="summary-card passed">
+                <div class="summary-label">Passed</div>
+                <div class="summary-value" id="passed-tests">0</div>
+            </div>
+            <div class="summary-card failed">
+                <div class="summary-label">Failed</div>
+                <div class="summary-value" id="failed-tests">0</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { 
+            validateDescription, 
+            validateAmount, 
+            validateDate, 
+            validateCategory,
+            checkDuplicateWords 
+        } from './scripts/validators.js';
+
+        const resultsEl = document.getElementById('results');
+        const summaryEl = document.getElementById('summary');
+        const totalEl = document.getElementById('total-tests');
+        const passedEl = document.getElementById('passed-tests');
+        const failedEl = document.getElementById('failed-tests');
+
+        let totalTests = 0;
+        let passedTests = 0;
+        let failedTests = 0;
+
+        /**
+         * Run a test case
+         */
+        function test(value, validator, shouldBeValid, testName) {
+            totalTests++;
+            const result = validator(value);
+            const passed = result.valid === shouldBeValid;
+
+            if (passed) {
+                passedTests++;
+            } else {
+                failedTests++;
+            }
+
+            const testCase = document.createElement('div');
+            testCase.className = `test-case ${passed ? 'pass' : 'fail'}`;
+            
+            const icon = document.createElement('div');
+            icon.className = 'test-icon';
+            icon.textContent = passed ? '✓' : '✗';
+            
+            const input = document.createElement('div');
+            input.className = 'test-input';
+            input.textContent = `"${value}"`;
+            input.title = value;
+            
+            const status = document.createElement('div');
+            status.className = 'test-result';
+            status.textContent = passed ? 'Pass' : 'Fail';
+            
+            testCase.appendChild(icon);
+            testCase.appendChild(input);
+            testCase.appendChild(status);
+
+            if (!passed) {
+                const error = document.createElement('div');
+                error.className = 'test-error';
+                error.textContent = `Expected ${shouldBeValid ? 'valid' : 'invalid'}, got ${result.valid ? 'valid' : 'invalid'}. Error: ${result.error}`;
+                testCase.appendChild(error);
+            }
+
+            return testCase;
+        }
+
+        /**
+         * Run duplicate word test
+         */
+        function testDuplicate(value, shouldHaveDuplicate, testName) {
+            totalTests++;
+            const result = checkDuplicateWords(value);
+            const passed = result.hasDuplicate === shouldHaveDuplicate;
+
+            if (passed) {
+                passedTests++;
+            } else {
+                failedTests++;
+            }
+
+            const testCase = document.createElement('div');
+            testCase.className = `test-case ${passed ? 'pass' : 'fail'}`;
+            
+            const icon = document.createElement('div');
+            icon.className = 'test-icon';
+            icon.textContent = passed ? '✓' : '✗';
+            
+            const input = document.createElement('div');
+            input.className = 'test-input';
+            input.textContent = `"${value}"`;
+            input.title = value;
+            
+            const status = document.createElement('div');
+            status.className = 'test-result';
+            status.textContent = passed ? 'Pass' : 'Fail';
+            
+            testCase.appendChild(icon);
+            testCase.appendChild(input);
+            testCase.appendChild(status);
+
+            if (!passed) {
+                const error = document.createElement('div');
+                error.className = 'test-error';
+                error.textContent = `Expected ${shouldHaveDuplicate ? 'duplicate' : 'no duplicate'}, got ${result.hasDuplicate ? 'duplicate' : 'no duplicate'}. Warning: ${result.warning}`;
+                testCase.appendChild(error);
+            }
+
+            return testCase;
+        }
+
+        /**
+         * Create section
+         */
+        function createSection(title, pattern) {
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            
+            const heading = document.createElement('h2');
+            heading.textContent = title;
+            section.appendChild(heading);
+
+            if (pattern) {
+                const patternDiv = document.createElement('div');
+                patternDiv.className = 'pattern-display';
+                patternDiv.textContent = `Pattern: ${pattern}`;
+                section.appendChild(patternDiv);
+            }
+
+            return section;
+        }
+
+        /**
+         * Run all tests
+         */
+        function runAllTests() {
+            // Reset counters
+            totalTests = 0;
+            passedTests = 0;
+            failedTests = 0;
+            resultsEl.innerHTML = '';
+
+            // ===== DESCRIPTION TESTS =====
+            const descSection = createSection('Description Validation', '/^\\S(?:.*\\S)?$/');
+            
+            // Valid cases
+            descSection.appendChild(test('Lunch at cafeteria', validateDescription, true));
+            descSection.appendChild(test('Coffee', validateDescription, true));
+            descSection.appendChild(test('A', validateDescription, true));
+            descSection.appendChild(test('Buy groceries for the week', validateDescription, true));
+            descSection.appendChild(test('123', validateDescription, true));
+            
+            // Invalid cases
+            descSection.appendChild(test(' Leading space', validateDescription, false));
+            descSection.appendChild(test('Trailing space ', validateDescription, false));
+            descSection.appendChild(test('  ', validateDescription, false));
+            descSection.appendChild(test('', validateDescription, false));
+            descSection.appendChild(test('Double  space', validateDescription, false));
+            descSection.appendChild(test(' Both sides ', validateDescription, false));
+            
+            resultsEl.appendChild(descSection);
+
+            // ===== AMOUNT TESTS =====
+            const amountSection = createSection('Amount Validation', '/^(0|[1-9]\\d*)(\\.\\d{1,2})?$/');
+            
+            // Valid cases
+            amountSection.appendChild(test('0', validateAmount, true));
+            amountSection.appendChild(test('12', validateAmount, true));
+            amountSection.appendChild(test('12.5', validateAmount, true));
+            amountSection.appendChild(test('12.50', validateAmount, true));
+            amountSection.appendChild(test('999.99', validateAmount, true));
+            amountSection.appendChild(test('1000', validateAmount, true));
+            amountSection.appendChild(test('0.01', validateAmount, true));
+            
+            // Invalid cases
+            amountSection.appendChild(test('12.345', validateAmount, false));
+            amountSection.appendChild(test('-5', validateAmount, false));
+            amountSection.appendChild(test('$12', validateAmount, false));
+            amountSection.appendChild(test('12.', validateAmount, false));
+            amountSection.appendChild(test('01', validateAmount, false));
+            amountSection.appendChild(test('abc', validateAmount, false));
+            amountSection.appendChild(test('', validateAmount, false));
+            amountSection.appendChild(test('12..50', validateAmount, false));
+            
+            resultsEl.appendChild(amountSection);
+
+            // ===== DATE TESTS =====
+            const dateSection = createSection('Date Validation', '/^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$/');
+            
+            // Valid cases (not in future)
+            dateSection.appendChild(test('2025-01-01', validateDate, true));
+            dateSection.appendChild(test('2025-12-31', validateDate, true));
+            dateSection.appendChild(test('2024-06-15', validateDate, true));
+            dateSection.appendChild(test('2023-02-28', validateDate, true));
+            
+            // Invalid cases
+            dateSection.appendChild(test('25-09-29', validateDate, false));
+            dateSection.appendChild(test('2025-9-29', validateDate, false));
+            dateSection.appendChild(test('2025-13-01', validateDate, false));
+            dateSection.appendChild(test('2025-00-01', validateDate, false));
+            dateSection.appendChild(test('2025-01-32', validateDate, false));
+            dateSection.appendChild(test('2025-02-30', validateDate, false));
+            dateSection.appendChild(test('', validateDate, false));
+            dateSection.appendChild(test('not-a-date', validateDate, false));
+            // Future date
+            dateSection.appendChild(test('2030-01-01', validateDate, false));
+            
+            resultsEl.appendChild(dateSection);
+
+            // ===== CATEGORY TESTS =====
+            const categorySection = createSection('Category Validation', '/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/');
+            
+            // Valid cases
+            categorySection.appendChild(test('Food', validateCategory, true));
+            categorySection.appendChild(test('Fast Food', validateCategory, true));
+            categorySection.appendChild(test('Health-Wellness', validateCategory, true));
+            categorySection.appendChild(test('Books', validateCategory, true));
+            categorySection.appendChild(test('A', validateCategory, true));
+            categorySection.appendChild(test('Multi Word Category Name', validateCategory, true));
+            
+            // Invalid cases
+            categorySection.appendChild(test('Food123', validateCategory, false));
+            categorySection.appendChild(test(' Food', validateCategory, false));
+            categorySection.appendChild(test('Food ', validateCategory, false));
+            categorySection.appendChild(test('Fast  Food', validateCategory, false));
+            categorySection.appendChild(test('Food-', validateCategory, false));
+            categorySection.appendChild(test('-Food', validateCategory, false));
+            categorySection.appendChild(test('Food_Category', validateCategory, false));
+            categorySection.appendChild(test('', validateCategory, false));
+            categorySection.appendChild(test('123', validateCategory, false));
+            
+            resultsEl.appendChild(categorySection);
+
+            // ===== DUPLICATE WORD TESTS (ADVANCED) =====
+            const duplicateSection = createSection('Duplicate Word Detection (Advanced)', '/\\b(\\w+)\\s+\\1\\b/i');
+            
+            // Should detect duplicates
+            duplicateSection.appendChild(testDuplicate('the the', true));
+            duplicateSection.appendChild(testDuplicate('paid paid invoice', true));
+            duplicateSection.appendChild(testDuplicate('Coffee coffee', true));
+            duplicateSection.appendChild(testDuplicate('buy buy groceries', true));
+            duplicateSection.appendChild(testDuplicate('THE THE', true));
+            
+            // Should NOT detect duplicates
+            duplicateSection.appendChild(testDuplicate('Lunch at cafeteria', false));
+            duplicateSection.appendChild(testDuplicate('Coffee and tea', false));
+            duplicateSection.appendChild(testDuplicate('Buy groceries', false));
+            duplicateSection.appendChild(testDuplicate('one two three', false));
+            duplicateSection.appendChild(testDuplicate('', false));
+            
+            resultsEl.appendChild(duplicateSection);
+
+            // Show summary
+            summaryEl.style.display = 'grid';
+            totalEl.textContent = totalTests;
+            passedEl.textContent = passedTests;
+            failedEl.textContent = failedTests;
+
+            // Scroll to results
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Run tests on button click
+        document.getElementById('run-tests').addEventListener('click', runAllTests);
+
+        // Auto-run tests on page load
+        window.addEventListener('load', runAllTests);
+    </script>
+</body>
+</html>
