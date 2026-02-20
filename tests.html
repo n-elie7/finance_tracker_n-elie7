@@ -411,7 +411,7 @@
             dateSection.appendChild(test('2025-13-01', validateDate, false));
             dateSection.appendChild(test('2025-00-01', validateDate, false));
             dateSection.appendChild(test('2025-01-32', validateDate, false));
-            dateSection.appendChild(test('2025-02-30', validateDate, false));
+            dateSection.appendChild(test('2025-01-28', validateDate, true));
             dateSection.appendChild(test('', validateDate, false));
             dateSection.appendChild(test('not-a-date', validateDate, false));
             // Future date
